@@ -900,6 +900,9 @@ typedef JMETHOD(boolean, jpeg_marker_parser_method, (j_decompress_ptr cinfo));
 #define jpeg_destroy_decompress	jDestDecompress
 #define jpeg_stdio_dest		jStdDest
 #define jpeg_stdio_src		jStdSrc
+#ifdef ADD_LEGACY_JPEG_MEM_SRC_SYMBOL
+#define jpeg_mem_src            jMemSrc
+#endif
 #define jpeg_set_defaults	jSetDefaults
 #define jpeg_set_colorspace	jSetColorspace
 #define jpeg_default_colorspace	jDefColorspace
@@ -973,6 +976,13 @@ EXTERN(void) jpeg_destroy_decompress JPP((j_decompress_ptr cinfo));
 /* Caller is responsible for opening the file before and closing after. */
 EXTERN(void) jpeg_stdio_dest JPP((j_compress_ptr cinfo, FILE * outfile));
 EXTERN(void) jpeg_stdio_src JPP((j_decompress_ptr cinfo, FILE * infile));
+
+#ifdef ADD_LEGACY_JPEG_MEM_SRC_SYMBOL
+/* Data source manager: memory buffers. */
+EXTERN(void) jpeg_mem_src JPP((j_decompress_ptr cinfo,
+                             unsigned char * inbuffer,
+                             unsigned long insize));
+#endif
 
 /* Default parameter setup for compression */
 EXTERN(void) jpeg_set_defaults JPP((j_compress_ptr cinfo));
