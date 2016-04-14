@@ -980,8 +980,8 @@ EXTERN(void) jpeg_stdio_src JPP((j_decompress_ptr cinfo, FILE * infile));
 #ifdef ADD_LEGACY_JPEG_MEM_SRC_SYMBOL
 /* Data source manager: memory buffers. */
 EXTERN(void) jpeg_mem_src JPP((j_decompress_ptr cinfo,
-                             unsigned char * inbuffer,
-                             unsigned long insize));
+			      unsigned char * inbuffer,
+			      unsigned long insize));
 #endif
 
 /* Default parameter setup for compression */

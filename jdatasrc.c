@@ -2,6 +2,7 @@
  * jdatasrc.c
  *
  * Copyright (C) 1994-1996, Thomas G. Lane.
+ * Modified 2009-2010 by Guido Vollbeding.
  * This file is part of the Independent JPEG Group's software.
  * For conditions of distribution and use, see the accompanying README file.
  *
@@ -198,6 +199,7 @@ skip_mem_input_data (j_decompress_ptr cinfo, long num_bytes)
 }
 #endif
 
+
 /*
  * An additional method that can be provided by data source modules is the
  * resync_to_restart method for error recovery in the presence of RST markers.
@@ -262,6 +264,7 @@ jpeg_stdio_src (j_decompress_ptr cinfo, FILE * infile)
   src->pub.next_input_byte = NULL; /* until buffer loaded */
 }
 
+
 /*
  * Prepare for input from a supplied memory buffer.
  * The buffer must contain the whole JPEG data.
@@ -270,21 +273,21 @@ jpeg_stdio_src (j_decompress_ptr cinfo, FILE * infile)
 #ifdef ADD_LEGACY_JPEG_MEM_SRC_SYMBOL
 GLOBAL(void)
 jpeg_mem_src (j_decompress_ptr cinfo,
-             unsigned char * inbuffer, unsigned long insize)
+	      unsigned char * inbuffer, unsigned long insize)
 {
   struct jpeg_source_mgr * src;
 
-  if (inbuffer == NULL || insize == 0) /* Treat empty input as fatal error */
+  if (inbuffer == NULL || insize == 0)	/* Treat empty input as fatal error */
     ERREXIT(cinfo, JERR_INPUT_EMPTY);
 
   /* The source object is made permanent so that a series of JPEG images
    * can be read from the same buffer by calling jpeg_mem_src only before
    * the first one.
    */
-  if (cinfo->src == NULL) {    /* first time for this JPEG object? */
+  if (cinfo->src == NULL) {	/* first time for this JPEG object? */
     cinfo->src = (struct jpeg_source_mgr *)
       (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT,
-                                 SIZEOF(struct jpeg_source_mgr));
+				  SIZEOF(struct jpeg_source_mgr));
   }
 
   src = cinfo->src;
